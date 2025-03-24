@@ -1,0 +1,26 @@
+global:
+  scrape_interval:     10s
+  external_labels:
+    monitor: hello-observability
+
+scrape_configs:
+  - job_name: hello-observability
+    scrape_interval: 10s
+    static_configs:
+      - targets: [hello-observability:8080]
+  - job_name: ms-service-app-ms1
+    scrape_interval: 10s
+    static_configs:
+      - targets: [ms-service-app-ms1:8081]
+  - job_name: ms-service-app-ms2
+    scrape_interval: 10s
+    static_configs:
+      - targets: [ms-service-app-ms2:8082]
+  - job_name: loki
+    scrape_interval: 10s
+    static_configs:
+      - targets: [loki:3100]
+  - job_name: tempo
+    scrape_interval: 10s
+    static_configs:
+      - targets: [tempo:3200]

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+	<appender name="FILE" class="ch.qos.logback.core.FileAppender">
+		<file>/tmp/ms-service-app-ms2.log</file>
+		<append>true</append>
+		<encoder>
+			<pattern>Logback %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - trkid=%X{X-trackId} traceID=%X{trace_id:-0} span_id=%X{span_id:-0} - %m%n</pattern>
+		</encoder>
+	</appender>
+	<appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
+		<encoder>
+			<pattern>Logback %d{yyyy-MM-dd HH:mm:ss} %-5p %c{1}:%L - trkid=%X{X-trackId} traceID=%X{trace_id:-0} span_id=%X{span_id:-0} - %m%n</pattern>
+		</encoder>
+	</appender>
+
+	<root level="INFO">
+		<appender-ref ref="FILE" />
+		<appender-ref ref="STDOUT" />
+	</root>
+
+</configuration>

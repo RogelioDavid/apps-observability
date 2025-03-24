@@ -1,0 +1,1 @@
+while true; do curl http://hello-observability:8080/start-seller; sleep 10s; done

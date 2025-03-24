@@ -1,0 +1,24 @@
+server:
+  port: 8081
+  tomcat:
+   accesslog.enabled: true
+   accesslog.rotate: false
+   accesslog.suffix: .log
+   accesslog.prefix: access_log
+   accesslog.directory: /tmp
+   accesslog.pattern: common
+#server.servlet.context-path=/ms/customer
+
+# Logging
+logging:
+  file:
+   name: /tmp/ms-service-app-ms1.log
+  level: 
+   org.springframework: INFO
+   org.springframework.web.filter.CommonsRequestLoggingFilter: DEBUG
+  pattern:
+   file: "%d{yyyy-MM-dd HH:mm:ss} - %logger{36} - %msg traceID=%X{trace_id} %n"
+
+# Tomcat logging
+app:
+  name: ms-service-customer
