@@ -1,0 +1,19 @@
+profile=local
+GRADLE_RUN_COMMAND=./gradlew bootRun -Dspring.profiles.active=$(profile) $(JVM_ARG)
+
+
+
+builder:
+	$(DOCKER_RUN_COMMAND) gradlew assemble $(ARG)
+
+
+docker-build: builder
+	docker build -f ci/docker/Dockerfile  -t rmendoza/ms-services-app-m4:v1.1 .
+
+docker-run:  
+	docker run --name api --rm -e SPRING_PROFILE=${SPRING_PROFILE}  \
+		-p 8080:8080 -p 5005:5005 \
+		 rmendoza/ms-services-app-m4:v1.1
+
+compose-run:  
+	docker-compose -f ci/compose/docker-compose.yaml up

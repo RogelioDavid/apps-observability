@@ -1,0 +1,20 @@
+server:
+  port: 8080
+
+#server.servlet.context-path=/ms/customer
+
+spring:
+  h2:
+    console:
+      enabled: true
+  datasource:
+    url: jdbc:h2:mem:mydb
+    username: sa
+    password: password
+    driverClassName: org.h2.Driver
+  jpa:
+    database-platform: org.hibernate.dialect.H2Dialect 
+    defer-datasource-initialization: true
+# Tomcat logging
+app:
+  name: ms-service-client

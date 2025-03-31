@@ -1,0 +1,9 @@
+server:
+  port: 8080
+
+#server.servlet.context-path=/ms/customer
+ 
+
+# Tomcat logging
+app:
+  name: ms-service-client
