@@ -10,10 +10,13 @@ builder:
 docker-build: builder
 	docker build -f ci/docker/Dockerfile  -t rmendoza/ms-services-app-m4:v1.1 .
 
-docker-run:  
+docker-run: docker-build
 	docker run --name api --rm -e SPRING_PROFILE=${SPRING_PROFILE}  \
 		-p 8080:8080 -p 5005:5005 \
 		 rmendoza/ms-services-app-m4:v1.1
 
-compose-run:  
+compose-run: docker-build
 	docker-compose -f ci/compose/docker-compose.yaml up
+
+compose-run-alloy: docker-build
+	docker-compose -f ci/compose/docker-compose-alloy.yaml up	

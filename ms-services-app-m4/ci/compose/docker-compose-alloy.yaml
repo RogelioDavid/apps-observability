@@ -1,0 +1,56 @@
+version: "3.4"
+services:
+ 
+  ms-service-app-ms4.applications.svc.cluster.local:
+    image: rmendoza/ms-services-app-m4:v1.1
+    environment:
+      - APP_NAME=ms-service-app-ms4
+      - JAVA_TOOL_OPTIONS= -Dspring.profiles.active=local -Dotel.instrumentation.http.server.capture-request-headers=X-Tenant-ID -Dotel.javaagent.extensions=otel-custom-extractor-1.0.0.jar -Dotel.instrumentation.servlet.experimental-span-attributes=true -DCUSTOM_HEADER_NAME=X-Tenant-ID -Dotel.instrumentation.http.server.capture-request-headers=X-Tenant-ID -Dotel.instrumentation.servlet.capture-headers=X-Tenant-ID -Dotel.instrumentation.common.default-enabled=true -Dotel.instrumentation.micrometer.enabled=true -Dotel.instrumentation.common-metrics.enabled=true -Dotel.instrumentation.common.default-enabled=true -Dotel.instrumentation.servlet-metrics.enabled=true -Dotel.instrumentation.common.enabled=true -Dotel.instrumentation.runtime-telemetry.enabled=true	  
+      - OTEL_SERVICE_NAME=ms-service-app-ms4
+      - OTEL_INSTRUMENTATION_MICROMETER_ENABLED=true
+      - OTEL_INSTRUMENTATION_APACHE_HTTPCLIENT_ENABLED=true
+      - OTEL_INSTRUMENTATION_SPRING_WEB_ENABLED=true
+      - OTEL_INSTRUMENTATION_JETTY_HTTPCLIENT_ENABLED=true
+      - OTEL_INSTRUMENTATION_JAVA_HTTP_CLIENT_ENABLED=true
+      - OTEL_INSTRUMENTATION_HTTP_CLIENT_EMIT_EXPERIMENTAL_TELEMETRY=true 
+      - OTEL_INSTRUMENTATION_HTTP_SERVER_EMIT_EXPERIMENTAL_TELEMETRY=true
+      - OTEL_INSTRUMENTATION_HTTP_SERVER_CAPTURE_RESPONSE_HEADERS=X-Tenant-ID
+      - OTEL_INSTRUMENTATION_HTTP_CLIENT_CAPTURE_RESPONSE_HEADERS=X-Tenant-ID
+      - OTEL_INSTRUMENTATION_COMMON_METRICS_ENABLED=true
+      - OTEL_INSTRUMENTATION_COMMON_DEFAULT_ENABLED=true
+      - OTEL_INSTRUMENTATION_SERVLET_ENABLED=true
+      - OTEL_INSTRUMENTATION_HTTP_URL_CONNECTION_ENABLED=true
+      - OTEL_INSTRUMENTATION_OKHTTP_ENABLED=true
+      - OTEL_JAVAAGENT_LOGGING=simple
+      - OTEL_INSTRUMENTATION_JDBC_CAPTURE_EXPERIMENTAL_SPAN_ATTRIBUTES=true
+      - OTEL_TRACES_EXPORTER=otlp
+      - OTEL_METRICS_EXPORTER=prometheus
+      - OTEL_EXPORTER_PROMETHEUS_PORT=9464
+      - OTEL_EXPORTER_OTLP_ENDPOINT=http://grafana-alloy-traces:4317
+      - OTEL_INSTRUMENTATION_HTTP_SERVER_CAPTURE_REQUEST_HEADERS=X-Tenant-ID 
+      - OTEL_INSTRUMENTATION_HTTP_CLIENT_CAPTURE_REQUEST_HEADERS=X-Tenant-ID
+      - OTEL_INSTRUMENTATION_SERVLET_CAPTURE_HEADERS=X-Tenant-ID
+      - OTEL_RESOURCE_ATTRIBUTES=service.name=ms-service-app-ms4,environment=production,region=us-east
+    ports:
+      - "8080:8080"
+      - "9464:9464"	  
+
+  grafana-alloy-traces:
+    container_name: grafana-alloy-traces  
+    image: grafana/alloy:v1.7.1
+    volumes:
+      - ./config/config-traces.alloy:/etc/agent/config.alloy
+    command:
+      - run
+      - /etc/agent/config.alloy
+      - --storage.path=/var/lib/alloy/data
+      - --server.http.listen-addr=0.0.0.0:12345
+ #     - -config.file=/etc/agent/config.river
+ #     - -config.file=/etc/agent-config/agent.yaml      
+    environment:
+      HOSTNAME: grafana-alloy-traces
+    ports:
+       - "4317:4317"
+       - "4318:4318"
+
+        

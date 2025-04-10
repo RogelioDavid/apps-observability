@@ -4,4 +4,5 @@ WORKDIR /api
 ARG JAR=ms-service-app-ms4.jar
 COPY build/libs/*.jar /app.jar
 COPY opentelemetry-javaagent-1.33.6.jar /opentelemetry-javaagent.jar
-ENTRYPOINT ["java",  "-javaagent:/opentelemetry-javaagent.jar", "-jar","/app.jar"]
+COPY otel-custom-extractor-1.0.0.jar /otel-custom-extractor-1.0.0.jar
+ENTRYPOINT ["java",  "-javaagent:/opentelemetry-javaagent.jar", "-Dotel.javaagent.extensions=/otel-custom-extractor-1.0.0.jar","-Dotel.javaagent.extension.plugins=/otel-custom-extractor-1.0.0.jar" ,"-jar","/app.jar"]
