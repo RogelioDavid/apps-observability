@@ -8,7 +8,11 @@ builder:
 
 
 docker-build: builder
-	docker build -f ci/docker/Dockerfile  -t rmendoza/ms-services-app-m4:v1.1 .
+	docker build -f ci/docker/Dockerfile.otelv1  -t rmendoza/ms-services-app-m4:v1.1 .
+
+
+docker-build-v2: builder
+	docker build -f ci/docker/Dockerfile.otelv2  -t rmendoza/ms-services-app-m4:v2.1 .
 
 docker-run: docker-build
 	docker run --name api --rm -e SPRING_PROFILE=${SPRING_PROFILE}  \

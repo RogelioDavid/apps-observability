@@ -65,7 +65,7 @@ otelcol.connector.host_info "app_obs" {
 
 otelcol.processor.batch "processorbatch" {
   output {
-    metrics = [otelcol.exporter.otlp.basetotlp.input]
+    metrics = [otelcol.exporter.prometheus.default.input]
     logs    = [otelcol.exporter.otlp.basetotlp.input]
     traces  = [otelcol.exporter.otlp.basetotlp.input,otelcol.connector.servicegraph.servicegraphbase.input,
               otelcol.connector.spanmetrics.spanmetricsbse.input]

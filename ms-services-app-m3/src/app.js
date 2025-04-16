@@ -1,4 +1,4 @@
-require("./tracing"); // Initialize OpenTelemetry
+//require("./tracing"); // Initialize OpenTelemetry
 const { logWithTracing } = require("./logger");
 
 const express = require("express");
